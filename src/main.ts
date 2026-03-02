@@ -4,11 +4,12 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  //hora
+  //hora local
   process.env.TZ = '-03:00';
 
   //validar biblioteca
   app.useGlobalPipes(new ValidationPipe());
+  
   //para aceitar requisições de outros domínios
   app.enableCors();
 
