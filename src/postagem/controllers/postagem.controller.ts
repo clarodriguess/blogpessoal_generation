@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { PostagemService } from "../services/postagem.service";
 import { Postagem } from "../entities/postagem.entities";
 
-@Controller("/postagens") //decorador para indicar que essa classe é um controller e vai responder pelas rotas /postagens
+@Controller('/postagens') //decorador para indicar que essa classe é um controller e vai responder pelas rotas /postagens
 export class PostagemController {
 
     //criar o construtor para injetar o serviço de postagem
