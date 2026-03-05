@@ -16,7 +16,7 @@ import { TemaModule } from './tema/tema.module';
       database: 'db_blogpessoal',
       entities: [Postagem, Tema],
       synchronize: true,
-      logging: true,
+      //logging: true,  - usar so pra ver o relacionamento entre as tabelas no console, nao usar em producao
     }),
     PostagemModule, 
     TemaModule

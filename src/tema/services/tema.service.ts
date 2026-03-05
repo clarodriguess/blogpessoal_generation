@@ -6,7 +6,7 @@ import { ILike, Repository, DeleteResult } from "typeorm";
 @Injectable() 
 export class TemaService {
     
-    //criar o construtor
+    // construtor
     constructor(
         @InjectRepository(Tema) 
         private temaRepository: Repository<Tema> 

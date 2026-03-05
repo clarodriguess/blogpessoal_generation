@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Postagem } from "../entities/postagem.entity";
+import { TemaService } from "../../tema/services/tema.service";
 
 //repository é a camada de acesso a dados, onde ficam os métodos para acessar o banco de dados (find, save, delete, etc)
 @Injectable() //injectable é para indicar que essa classe pode ser injetada em outras classes (como o controller)
@@ -10,7 +11,8 @@ export class PostagemService {
     //criar o construtor
     constructor(
         @InjectRepository(Postagem) 
-        private postagemRepository: Repository<Postagem> 
+        private postagemRepository: Repository<Postagem>,
+        private readonly temaService: TemaService //injetar o TemaService para poder usar os métodos do tema (como o findById) para verificar se o tema existe antes de criar ou atualizar uma postagem
     ){} 
 
     //metodo para listar todas as postagens - findAll() - retorna uma Promise de um array de Postagem
@@ -50,6 +52,9 @@ export class PostagemService {
 
     //metodo para criar uma nova postagem - save() - recebe um objeto do tipo Postagem e retorna o objeto salvo
     async create(postagem: Postagem): Promise<Postagem> {
+        
+        this.temaService.findById(postagem.tema.id) //verificar se o tema existe antes de criar a postagem, se nao existir, ele lança um erro   
+
         return await this.postagemRepository.save(postagem); //insert into tb_postagens (titulo, texto) values (?, ?)
     }
 
@@ -60,7 +65,8 @@ export class PostagemService {
         if(!postagem.id || postagem.id <= 0) 
             throw new HttpException("ID da postagem inválido", HttpStatus.BAD_REQUEST);
         
-        await this.findById(postagem.id);
+        await this.findById(postagem.id); //checa se a postagem existe
+        await this.temaService.findById(postagem.tema.id) //checa se o tema existe
         return this.postagemRepository.save(postagem); //save() - se o id existir, ele atualiza, se nao existir, ele cria
     }
 

@@ -9,6 +9,6 @@ import { TemaController } from "./controllers/tema.controller";
     imports: [TypeOrmModule.forFeature([Tema])], //chamar a entidade Tema
     controllers: [TemaController], //classe que vai responder as requisições (rotas)
     providers: [TemaService],//classe q vai prover os serviços (métodos) para o controller
-    exports: [TemaService] 
+    exports: [TemaService] //para poder ser usado em outros módulos (como o PostagemModule)
 })
 export class TemaModule {}
