@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Tema } from "../entities/tema.entities";
+import { Tema } from "../entities/tema.entity";
 import { ILike, Repository, DeleteResult } from "typeorm";
 
 @Injectable() 
@@ -14,14 +14,21 @@ export class TemaService {
 
     //metodo para listar tds os temas - findAll()
     async findAll(): Promise<Tema[]> {
-        return await this.temaRepository.find(); //select * from tb_temas
+        return await this.temaRepository.find({
+                relations: {
+                    postagem: true
+                }
+            }); //select * from tb_temas
     }  
 
     //metodo para listar um tema por id - findById() -
     //o retorno do FindById é um obj e nao uma array, por isso necessario criar uma constante para guardar a resposta e verificar se existe ou nao o tema
     async findById(id: number): Promise<Tema> {
        const tema = await this.temaRepository.findOne({
-            where: { id }
+            where: { id },
+            relations: {
+                postagem: true
+            }
         })         //select * from tb_temas where id = ? 
         if (!tema) 
             throw new HttpException(`Tema com id ${id} não encontrado`, HttpStatus.NOT_FOUND); //lançar um erro caso o tema nao seja encontrado
@@ -33,6 +40,9 @@ export class TemaService {
         return this.temaRepository.find({
             where: {
                 descricao: ILike(`%${descricao}%`) //select * from tb_temas where descricao like '%descricao%'
+            },
+            relations: {
+                postagem: true
             }
         })
     }

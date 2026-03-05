@@ -1,6 +1,7 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsNotEmpty, Length } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Tema } from "../../tema/entities/tema.entity";
 
 //decorador para indicar que é uma entidade 
 @Entity({name: 'tb_postagens'}) //equivalente a um CREATE TABLE tb_postagens
@@ -24,4 +25,10 @@ export class Postagem { //atributos da classe:
 
     @UpdateDateColumn() //a data vai entrar automaticamente quando for criado ou atualizado
     data: Date;
+
+    //criando a relação entre postagem e tema - muitos para um - uma postagem tem um tema, mas um tema pode ter muitas postagens
+        @ManyToOne( () => Tema, (tema) => tema.postagem, {
+        onDelete: 'CASCADE' //quando um tema for deletado, as postagens relacionadas a ele também serão deletadas
+    })  
+    tema:Tema; //representa a chave estrangeira da tabela postagem, que vai referenciar a tabela tema
 }

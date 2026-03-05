@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
-import { Postagem } from "../entities/postagem.entities";
+import { Postagem } from "../entities/postagem.entity";
 
 //repository é a camada de acesso a dados, onde ficam os métodos para acessar o banco de dados (find, save, delete, etc)
 @Injectable() //injectable é para indicar que essa classe pode ser injetada em outras classes (como o controller)
@@ -15,14 +15,22 @@ export class PostagemService {
 
     //metodo para listar todas as postagens - findAll() - retorna uma Promise de um array de Postagem
     async findAll(): Promise<Postagem[]> {
-        return await this.postagemRepository.find(); //select * from tb_postagens
+        //select * from tb_postagens  
+        return this.postagemRepository.find({
+            relations: {
+                tema: true
+            }
+        });      
     }  
     
     //metodo para listar uma postagem por id - findOne() - retorna um objeto
     async findById(id: number): Promise<Postagem> {
         //Guardar a resposta numa const para saber se achou o resultado ou nao
         const postagem = await this.postagemRepository.findOne({
-            where: { id }
+            where: { id },
+            relations: {
+                tema: true
+            }
     }) //select * from tb_postagens where id = ?
       if (!postagem) 
         throw new HttpException(`Postagem com id ${id} não encontrada`, HttpStatus.NOT_FOUND); //lançar um erro caso a postagem não seja encontrada
@@ -34,9 +42,11 @@ export class PostagemService {
         return this.postagemRepository.find({
             where: {
                 titulo: ILike(`%${titulo}%`) //select * from tb_postagens where titulo like '%titulo%'
-            }
-        })
-    }
+            },
+            relations: {
+                tema: true
+            }        
+        })}
 
     //metodo para criar uma nova postagem - save() - recebe um objeto do tipo Postagem e retorna o objeto salvo
     async create(postagem: Postagem): Promise<Postagem> {
