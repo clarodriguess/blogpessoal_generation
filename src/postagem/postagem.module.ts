@@ -12,4 +12,4 @@ import { TemaModule } from "../tema/tema.module";
     providers: [PostagemService],//classe q vai prover os serviços (métodos) para o controller
     exports: []
 })
-export class PostagemModule {}
+export class PostagemModule {}  
