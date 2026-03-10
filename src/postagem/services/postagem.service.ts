@@ -20,7 +20,8 @@ export class PostagemService {
         //select * from tb_postagens  
         return this.postagemRepository.find({
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         });      
     }  
@@ -31,7 +32,8 @@ export class PostagemService {
         const postagem = await this.postagemRepository.findOne({
             where: { id },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
     }) //select * from tb_postagens where id = ?
       if (!postagem) 
@@ -46,7 +48,8 @@ export class PostagemService {
                 titulo: ILike(`%${titulo}%`) //select * from tb_postagens where titulo like '%titulo%'
             },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }        
         })}
 
