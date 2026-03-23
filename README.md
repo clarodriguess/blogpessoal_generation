@@ -1,98 +1,237 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<div align="center">
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 📝 Blog Pessoal
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API RESTful de um blog pessoal desenvolvida com NestJS, TypeORM e PostgreSQL.
+Permite gerenciar usuários, postagens e temas com autenticação segura via JWT.
 
-## Description
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![TypeORM](https://img.shields.io/badge/TypeORM-FE0902?style=for-the-badge&logo=typeorm&logoColor=white)](https://typeorm.io/)
+[![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
+[![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[🔗 Deploy](#-deploy) • [📖 Documentação](#-documentação-swagger) • [🚀 Como rodar](#-como-rodar-localmente)
 
-## Project setup
+</div>
 
-```bash
-$ npm install
+---
+
+## 📋 Sobre o projeto
+
+API de blog pessoal com operações CRUD completas para **usuários**, **postagens** e **temas**. A aplicação conta com autenticação via JWT, criptografia de senhas com Bcrypt, documentação interativa com Swagger e banco de dados PostgreSQL hospedado no Neon.
+
+---
+
+## ✨ Funcionalidades
+
+- **Usuários** — cadastro, login, atualização e listagem
+- **Postagens** — criação, edição, remoção e busca por título
+- **Temas** — categorização de postagens, busca por descrição
+- **Autenticação** — login com JWT, rotas protegidas por guards
+- **Segurança** — senhas criptografadas com Bcrypt
+- **Relacionamentos** — postagens vinculadas a temas e usuários
+- **Documentação** — Swagger UI disponível em `/swagger`
+- **Deploy** — hospedado no Render com banco de dados no Neon
+
+---
+
+## 🗂️ Estrutura do projeto
+
+```
+src/
+├── auth/                        # Autenticação e segurança
+│   ├── bcrypt/                  # Criptografia de senhas
+│   ├── constants/               # Chave secreta do JWT
+│   ├── controllers/             # Endpoint de login
+│   ├── entities/                # Entidade de login
+│   ├── guard/                   # Guards JWT e Local
+│   ├── services/                # Lógica de autenticação
+│   ├── strategy/                # Estratégias Passport (JWT e Local)
+│   └── auth.module.ts
+│
+├── data/services/               # Configuração do banco de dados
+│   ├── dev.service.ts           # Configuração para desenvolvimento
+│   └── prod.service.ts          # Configuração para produção
+│
+├── postagem/                    # Módulo de postagens
+│   ├── controllers/
+│   ├── entities/
+│   ├── services/
+│   └── postagem.module.ts
+│
+├── tema/                        # Módulo de temas
+│   ├── controllers/
+│   ├── entities/
+│   ├── services/
+│   └── tema.module.ts
+│
+├── usuario/                     # Módulo de usuários
+│   ├── controllers/
+│   ├── entities/
+│   ├── services/
+│   └── usuario.module.ts
+│
+├── app.module.ts
+└── main.ts
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 🔗 Relacionamentos entre entidades
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+Usuario  1 ──────────── N  Postagem
+Tema     1 ──────────── N  Postagem
 ```
 
-## Run tests
+Um **usuário** pode ter várias **postagens**.
+Um **tema** pode estar associado a várias **postagens**.
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+| Tecnologia     | Versão   | Finalidade                          |
+|----------------|----------|-------------------------------------|
+| NestJS         | ^10.x    | Framework principal                 |
+| TypeScript     | ^5.x     | Linguagem de programação            |
+| TypeORM        | ^0.3.x   | ORM para banco de dados             |
+| PostgreSQL      | —        | Banco de dados relacional           |
+| Passport.js    | ^0.6.x   | Autenticação                        |
+| JWT            | ^10.x    | Tokens de acesso                    |
+| Bcrypt         | ^5.x     | Criptografia de senhas              |
+| Swagger        | ^7.x     | Documentação da API                 |
+| Neon           | —        | Banco de dados serverless (produção)|
+| Render         | —        | Plataforma de deploy                |
+
+---
+
+## 🚀 Como rodar localmente
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/) v18+
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- PostgreSQL instalado localmente (ou conexão com Neon)
+
+### Instalação
 
 ```bash
-# unit tests
-$ npm run test
+# Clone o repositório
+git clone https://github.com/seu-usuario/blogpessoal.git
 
-# e2e tests
-$ npm run test:e2e
+# Acesse a pasta do projeto
+cd blogpessoal
 
-# test coverage
-$ npm run test:cov
+# Instale as dependências
+npm install
 ```
 
-## Deployment
+### Configuração do ambiente
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Crie um arquivo `.env` na raiz do projeto:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+# Banco de dados (desenvolvimento)
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+DB_DATABASE=blogpessoal
+
+# JWT
+JWT_SECRET=sua_chave_secreta
+```
+
+### Executando
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Modo desenvolvimento
+npm run start:dev
+
+# Modo produção
+npm run start:prod
+
+# Build
+npm run build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+A API estará disponível em: `http://localhost:4000`
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📡 Endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 🔐 Auth
+| Método | Rota         | Descrição           | Auth |
+|--------|--------------|---------------------|------|
+| POST   | `/auth/login` | Login do usuário   | ❌   |
 
-## Support
+### 👤 Usuário
+| Método | Rota              | Descrição                   | Auth |
+|--------|-------------------|-----------------------------|------|
+| GET    | `/usuarios`       | Lista todos os usuários     | ✅   |
+| GET    | `/usuarios/:id`   | Busca usuário por ID        | ✅   |
+| POST   | `/usuarios/cadastrar` | Cadastra novo usuário   | ❌   |
+| PUT    | `/usuarios/atualizar` | Atualiza usuário        | ✅   |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 📝 Postagem
+| Método | Rota                  | Descrição                    | Auth |
+|--------|-----------------------|------------------------------|------|
+| GET    | `/postagens`          | Lista todas as postagens     | ✅   |
+| GET    | `/postagens/:id`      | Busca postagem por ID        | ✅   |
+| GET    | `/postagens/titulo/:titulo` | Busca por título       | ✅   |
+| POST   | `/postagens`          | Cria nova postagem           | ✅   |
+| PUT    | `/postagens`          | Atualiza postagem            | ✅   |
+| DELETE | `/postagens/:id`      | Remove postagem              | ✅   |
 
-## Stay in touch
+### 🏷️ Tema
+| Método | Rota                        | Descrição                  | Auth |
+|--------|-----------------------------|----------------------------|------|
+| GET    | `/temas`                    | Lista todos os temas       | ✅   |
+| GET    | `/temas/:id`                | Busca tema por ID          | ✅   |
+| GET    | `/temas/descricao/:descricao` | Busca por descrição      | ✅   |
+| POST   | `/temas`                    | Cria novo tema             | ✅   |
+| PUT    | `/temas`                    | Atualiza tema              | ✅   |
+| DELETE | `/temas/:id`                | Remove tema                | ✅   |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+> ✅ = Requer token JWT no header `Authorization: Bearer <token>`
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🔒 Autenticação
+
+A API utiliza **JWT (JSON Web Token)** para proteger as rotas. Após realizar o login, utilize o token retornado no header de todas as requisições autenticadas:
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+As senhas são armazenadas com hash **Bcrypt**, garantindo que nunca sejam salvas em texto puro no banco de dados.
+
+---
+
+## 📖 Documentação Swagger
+
+A documentação interativa da API está disponível em:
+
+- **Local:** `http://localhost:4000/swagger`
+- **Produção:** `https://blogpessoal-generation-66yb.onrender.com/swagger`
+
+---
+
+## ☁️ Deploy
+
+A aplicação está hospedada no **[Render](https://render.com/)** com banco de dados **PostgreSQL serverless** pelo **[Neon](https://neon.tech/)**.
+
+**URL da API em produção:**
+```
+https://blogpessoal-generation-66yb.onrender.com
+```
+
+> ⚠️ Por ser um serviço gratuito, o servidor pode demorar alguns segundos para responder na primeira requisição (cold start).
+
+---
+
