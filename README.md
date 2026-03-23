@@ -222,6 +222,52 @@ A documentação interativa da API está disponível em:
 
 ---
 
+## 🧪 Testes
+
+A aplicação possui testes **End-to-End (E2E)** utilizando **Supertest** + **Jest**, com banco de dados **SQLite em memória** para garantir um ambiente isolado e limpo a cada execução.
+
+### Casos de teste
+
+| #  | Descrição                                      | Método | Rota                  | Status esperado |
+|----|------------------------------------------------|--------|-----------------------|-----------------|
+| 01 | Deve cadastrar um novo usuário                 | POST   | `/usuarios/cadastrar` | `201`           |
+| 02 | Não deve cadastrar um usuário já existente     | POST   | `/usuarios/cadastrar` | `400`           |
+| 03 | Deve autenticar um usuário cadastrado (login)  | POST   | `/usuarios/logar`     | `200`           |
+| 04 | Deve listar todos os usuários 🔒               | GET    | `/usuarios/all`       | `200`           |
+| 05 | Deve atualizar os dados de um usuário 🔒       | PUT    | `/usuarios/atualizar` | `200`           |
+| 06 | Deve buscar um usuário pelo ID 🔒              | GET    | `/usuarios/:id`       | `200`           |
+
+> 🔒 Rotas que exigem token JWT no header `Authorization`
+
+### Detalhes de implementação
+
+- Banco de dados **SQLite em memória** — criado antes dos testes e destruído ao final
+- O **token JWT** obtido no teste 03 é reutilizado nos testes protegidos (04, 05 e 06)
+- O **ID do usuário** criado no teste 01 é reutilizado nos testes 05 e 06
+- `ValidationPipe` global ativado para validar os dados nos testes
+
+### Como executar
+
+```bash
+# Rodar todos os testes E2E
+npm run test:e2e
+
+# Rodar com cobertura
+npm run test:cov
+
+# Modo watch
+npm run test:watch
+```
+
+### Estrutura
+
+```
+test/
+└── app.e2e-spec.ts   # Testes E2E com Supertest
+```
+
+---
+
 ## ☁️ Deploy
 
 A aplicação está hospedada no **[Render](https://render.com/)** com banco de dados **PostgreSQL serverless** pelo **[Neon](https://neon.tech/)**.
@@ -234,4 +280,3 @@ https://blogpessoal-generation-66yb.onrender.com
 > ⚠️ Por ser um serviço gratuito, o servidor pode demorar alguns segundos para responder na primeira requisição (cold start).
 
 ---
-
